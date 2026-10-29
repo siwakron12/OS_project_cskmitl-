@@ -45,7 +45,6 @@ def latest_image():
 
 
 def load_report(path: Path):
-    """อ่านผลที่ main2.py เขียนไว้คู่กับรูป; None = ยังประมวลผลไม่เสร็จ"""
     report = path.with_suffix(".json")
     if not report.exists():
         return None
@@ -59,9 +58,9 @@ def show_result(path: Path, report: dict):
     st.image(str(path), caption=path.name, width="stretch")
 
     if report["allowed"]:
-        st.success("✅ อนุญาตให้ผ่าน")
+        st.success("อนุญาตให้ผ่าน")
     else:
-        st.error(f"⛔ ไม่อนุญาตให้ผ่าน — {report['message']}")
+        st.error(f"ไม่อนุญาตให้ผ่าน — {report['message']}")
 
     result = report.get("result")
     if not result or not result.get("success"):
@@ -105,13 +104,13 @@ def watcher():
     path = latest_image()
 
     if path is None:
-        st.info("📭 ยังไม่มีรูป — กดปุ่มเพื่อถ่ายรูป")
+        st.info("ยังไม่มีรูป — กดปุ่มเพื่อถ่ายรูป")
         return
 
     report = load_report(path)
     if report is None:
         st.image(str(path), caption=path.name, width="stretch")
-        st.info("⏳ กำลังอ่านป้ายทะเบียน...")
+        st.info("กำลังอ่านป้ายทะเบียน...")
         return
 
     show_result(path, report)
